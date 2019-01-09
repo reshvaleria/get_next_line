@@ -6,7 +6,7 @@
 /*   By: wjeyne-d <wjeyne-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:56:18 by wjeyne-d          #+#    #+#             */
-/*   Updated: 2019/01/06 20:16:43 by wjeyne-d         ###   ########.fr       */
+/*   Updated: 2019/01/09 18:38:40 by wjeyne-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 static int ft_is_next_line(**buf, **tmp)
 {
 	char *ptr;
+	int len;
 
 	if (ptr = ft_strchr(buf, '\n'))
 	{
-		tmp = ft_strnew(ptr - buf);
-		ft_memmove(tmp, buf, ptr - buf);
-		strcpy(buf, buf + (ptr - buf));
+		len = ptr - buf + 1;
+		tmp = ft_strnew(len);
+		ft_memmove(tmp, buf, len);
+		strcpy(buf, buf + len);
 		//line = ft_strjoin
 		// ptr[0] = '\0';
 		// if (tmp)
