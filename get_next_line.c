@@ -6,18 +6,19 @@
 /*   By: wjeyne-d <wjeyne-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:56:18 by wjeyne-d          #+#    #+#             */
-/*   Updated: 2019/01/09 20:34:28 by wjeyne-d         ###   ########.fr       */
+/*   Updated: 2019/01/09 20:55:11 by wjeyne-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int ft_is_next_line(**buf, **tmp)
+static int ft_is_next_line(char **buf, char **tmp)
 {
 	char *ptr;
 	int len;
 
-	if (ptr = ft_strchr(buf, '\n'))
+ptr = ft_strchr(*buf, '\n');
+	if (ptr)
 	{
 		len = ptr - buf + 1;
 		tmp = ft_strnew(len);
@@ -60,6 +61,7 @@ int	get_next_line(const int fd, char **line)
 		{
 			line = ft_strjoin(stack, buf);
 		}
+	}
 		return(0);
 	//	buf[r] = '\0';
 

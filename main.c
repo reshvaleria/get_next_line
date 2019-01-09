@@ -16,5 +16,6 @@ int main(int argc, char **argv)
 	// 	free(line);
 	// }
 	get_next_line(fd, &line);
+	free(line);
 //printf("%d",read(fd, buf, 0));
 }
