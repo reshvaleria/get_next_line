@@ -1,9 +1,12 @@
 #include <fcntl.h>
 #include <stdio.h>
+#include "get_next_line.h"
 
 int main(int argc, char **argv)
 {
 	int g;
+if (argc)
+g = 1;
 	int fd;
  	char *line;
 //char buf[2];

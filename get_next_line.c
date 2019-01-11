@@ -17,13 +17,15 @@ static int ft_is_next_line(char **buf, char **tmp)
 	char *ptr;
 	int len;
 
-ptr = ft_strchr(*buf, '\n');
+ptr = ft_strchr((char *)buf, '\n');
 	if (ptr)
 	{
-		len = ptr - buf + 1;
-		tmp = ft_strnew(len);
-		ft_strncpy(tmp, buf, len - 1);
-		ft_strcpy(buf, buf + len);
+		len = ptr - (char *)buf + 1;
+		*tmp = ft_strnew(len);
+		ft_strncpy(*tmp, (char *)buf, (len - 1));
+		ft_strcpy((char *)buf, ((char *)buf + len));
+
+		//дальше лажа
 		//line = ft_strjoin
 		// ptr[0] = '\0';
 		// if (tmp)
@@ -50,16 +52,16 @@ int	get_next_line(const int fd, char **line)
 	while((r = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[0] = '\0';
-		stack = line;
-		if(ft_is_next_line(&buf, &tmp))
+		stack = *line;
+		if(ft_is_next_line((char **)&buf, &tmp))
 		{
-			line = ft_strjoin(stack, tmp);
+			line = (char **)ft_strjoin(stack, tmp);
 			free(tmp);
 			return(1);
 		}
 		else
 		{
-			line = ft_strjoin(stack, buf);
+			line = (char **)ft_strjoin(stack, buf);
 		}
 	}
 		return(0);
