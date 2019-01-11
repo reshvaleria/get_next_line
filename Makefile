@@ -2,12 +2,11 @@ NAME = test
 HEADER = libft.h
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
-SRC = *.c
+SRC = get_next_line.c main.c
+LIBA = libft/libft.a
 
-all: $(NAME)
-
-$(NAME):
-	$(CC) $(FLAGS) -o test $(SRC) -I $(HEADER)
+all:
+	$(CC) $(FLAGS) -o $(NAME) $(SRC) $(LIBA)
 
 clean:
 	rm -f $(NAME)
