@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 static int ft_is_next_line(char **buf, char **tmp)
 {
@@ -23,6 +24,8 @@ ptr = ft_strchr((char *)buf, '\n');
 		len = ptr - (char *)buf + 1;
 		*tmp = ft_strnew(len);
 		ft_strncpy(*tmp, (char *)buf, (len - 1));
+		printf("tmp: %s\n", *tmp);
+
 		ft_strcpy((char *)buf, ((char *)buf + len));
 
 		//дальше лажа
@@ -41,7 +44,7 @@ ptr = ft_strchr((char *)buf, '\n');
 
 int	get_next_line(const int fd, char **line)
 {
-	static char buf[BUFF_SIZE + 1];
+	 char buf[BUFF_SIZE + 1];
 	int r;
 	char *tmp;
 	char *stack;
@@ -51,11 +54,21 @@ int	get_next_line(const int fd, char **line)
 		return (-1);
 	while((r = read(fd, buf, BUFF_SIZE)) > 0)
 	{
+		printf("read bytes: %d\n", r);
+		printf("buf is: %s\n", buf);
+
 		buf[0] = '\0';
 		stack = *line;
+		printf("stack: %s\n", stack);
+		printf("line: %s\n", *line);
+
+
+
 		if(ft_is_next_line((char **)&buf, &tmp))
 		{
 			line = (char **)ft_strjoin(stack, tmp);
+			printf("%s\n", *line);
+
 			free(tmp);
 			return(1);
 		}
