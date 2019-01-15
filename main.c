@@ -19,6 +19,7 @@ g = 1;
 	// 	free(line);
 	// }
 	get_next_line(fd, &line);
+	printf("THIS IS FINAL LINE: %s\n", line);
 	free(line);
 //printf("%d",read(fd, buf, 0));
 }

@@ -44,10 +44,10 @@ ptr = ft_strchr((char *)buf, '\n');
 
 int	get_next_line(const int fd, char **line)
 {
-	 char buf[BUFF_SIZE + 1];
+	char buf[BUFF_SIZE + 1];
 	int r;
 	char *tmp;
-	char *stack;
+	static char *stack[MAX_FD];
 	//
 
 	if ((fd < 0 || line == NULL || read(fd, buf, 0) < 0))
@@ -58,8 +58,7 @@ int	get_next_line(const int fd, char **line)
 		printf("buf is: %s\n", buf);
 
 		buf[0] = '\0';
-		stack = *line;
-		printf("stack: %s\n", stack);
+
 		printf("line: %s\n", *line);
 
 
@@ -74,6 +73,8 @@ int	get_next_line(const int fd, char **line)
 		}
 		else
 		{
+			stack = ft_strdup(buf);
+			printf("stack: %s\n", stack);
 			line = (char **)ft_strjoin(stack, buf);
 		}
 	}
