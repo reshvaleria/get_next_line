@@ -18,7 +18,7 @@ g = 1;
 		g = get_next_line(fd, &line);
 		printf("FINAL LINE: %s!!!\n", line);
 		free(line);
-		printf("GNLRES: %d\n", g);
+		//printf("GNLRES: %d\n", g);
 
 	}
 	//get_next_line(fd, &line);
