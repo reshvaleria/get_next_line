@@ -16,19 +16,25 @@
 static int ft_is_next_line(char **stack, char **line)
 {
 	char *ptr;
-	int len;
+	char *tmp;
+//	int len;
 
 	ptr = ft_strchr(*stack, '\n');
 	printf("PTR ISNEXTLINE: %s\n", ptr);
 
 	if (ptr)
 	{
-		len = ptr - *stack + 1;
+	//	len = ptr - *stack + 1;
+	tmp = &*ptr;
+	*tmp = '\0';
+	*line = ft_strdup(*stack);
+	*stack = ft_strdup(tmp + 1);
+	return (1);
 	//	*tmp = ft_strnew(len);
 	//	ft_strncpy(*tmp, *stack, (len - 1));
 	//	printf("TMP ISNEXTLINE: %s\n", *tmp);
 
-		ft_strcpy(*stack, (*stack + len));
+	//	ft_strcpy(*stack, (*stack + len));
 
 		//дальше лажа
 		//line = ft_strjoin
@@ -48,7 +54,7 @@ int	get_next_line(const int fd, char **line)
 {
 	char *buf;
 	int r;
-//	char *tmp;
+	char *tmp;
 	static char *stack[MAX_FD];
 	//
 
@@ -65,25 +71,30 @@ int	get_next_line(const int fd, char **line)
 	while((r = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[r] ='\0';
-
-		printf("read bytes: %d\n", r);
+		if(stack[fd])
+		{
+			printf("read bytes: %d\n", r);
+			tmp = stack[fd];
+			stack[fd] = ft_strjoin(tmp, buf);
+			free(tmp);
+			tmp = NULL;
 	//	printf("buf is: %s\n", buf);
 	//	buf[0] = '\0';
-		printf("GNL LINE: %s\n", *line);
-
+			printf("GNL STACK: %s\n", stack[fd]);
+		}
 		else
 		{
-		//	stack = ft_strdup(buf);
+			stack[fd] = ft_strdup(buf);
 			printf("GNL STACK[FD]: %s\n", stack[fd]);
+			if (ft_is_next_line(&stack[fd], line))
+				break ;
 			//line = (char **)ft_strjoin(stack, buf);
 		}
-	}
+}
+free (buf);
+
 		return(0);
 	//	buf[r] = '\0';
-
-
-
-
 	// }
 	// //	printf("%d\n %s\n", r, buf);
 	// return(0);
