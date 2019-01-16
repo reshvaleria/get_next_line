@@ -61,11 +61,11 @@ int	get_next_line(const int fd, char **line)
 		buf[r] = '\0';
 		ft_stack_check(&stack[fd], &buf);
 		if (ft_is_next_line(&stack[fd], line))
-		{
+		//{
 			//free(buf);
-			printf("this is buf: %s\n", buf);
+			//printf("this is buf: %s\n", buf);
 			break ;
-		}
+		//}
 	}
 	if (r != 0 || stack[fd] == NULL || stack[fd][0] == '\0')
 	{
