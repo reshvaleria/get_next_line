@@ -16,12 +16,14 @@ g = 1;
 	while (g > 0)
 	{
 		g = get_next_line(fd, &line);
-		printf("line: %s\n", line);
+		printf("FINAL LINE: %s!!!\n", line);
 		free(line);
+		printf("GNLRES: %d\n", g);
+
 	}
 	//get_next_line(fd, &line);
 	//printf("THIS IS FINAL LINE: %s\n", line);
-	free(line);
+//	free(line);
 	}
 //printf("%d",read(fd, buf, 0));
 }
