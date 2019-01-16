@@ -15,20 +15,22 @@
 
 static int ft_is_next_line(char **stack, char **line)
 {
+	printf("stroka v kotoroi ischem perenos: %s\n", *stack);
 	char *ptr;
 	char *tmp;
 
 	if ((ptr = ft_strchr(*stack, '\n')))
 	{
-		//printf("PTR ISNEXTLINE: %s\n", ptr);
+		printf("PTR ISNEXTLINE: %s\n", ptr);
 		tmp = &*ptr;
-		//printf("TMP CHAR ISNEXTLINE: %c!\n", *tmp);
+		printf("TMP CHAR ISNEXTLINE: %c!\n", *tmp);
 		*tmp = '\0';
-		//printf("TMP CHAR ISNEXTLINE (should be '0'): %c!\n", *tmp);
+		printf("TMP CHAR ISNEXTLINE (should be '0'): %c!\n", *tmp);
 		*line = ft_strdup(*stack);
 		*stack = ft_strdup(tmp + 1);
 		return (1);
 	}
+	printf("strchr didnt found perenos stroki\n" );
 	return (0);
 }
 
@@ -51,20 +53,22 @@ int	get_next_line(const int fd, char **line)
 		buf[r] ='\0';
 		if(stack[fd])
 		{
-			//printf("read bytes: %d\n", r);
+			printf("read bytes: %d\n", r);
 			tmp = stack[fd];
 			stack[fd] = ft_strjoin(tmp, buf);
 			free(tmp);
 			tmp = NULL;
-			//printf("GNL STACK: %s\n", stack[fd]);
+			printf("GNL STACK: %s\n", stack[fd]);
 		}
 		else
 		{
 			stack[fd] = ft_strdup(buf);
 			//printf("GNL STACK[FD]: %s\n", stack[fd]);
-			if (ft_is_next_line(&stack[fd], line))
-				break ;
+
+				//ft_is_next_line(&stack[fd], line);
 		}
+		if (ft_is_next_line(&stack[fd], line))
+				break ;
 	}
 	if (r != 0 || stack[fd] == NULL || stack[fd][0] == '\0')
 	{

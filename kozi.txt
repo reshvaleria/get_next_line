@@ -1,2 +1,2 @@
-lera = zina prodavshica
-sasha = kuzmich s zavoda
+1lera = zina prodavshica1
+1sasha = kuzmich s zavoda2
