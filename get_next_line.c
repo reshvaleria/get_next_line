@@ -13,20 +13,22 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-static int ft_is_next_line(char **buf, char **tmp)
+static int ft_is_next_line(char **stack, char **line)
 {
 	char *ptr;
 	int len;
 
-ptr = ft_strchr((char *)buf, '\n');
+	ptr = ft_strchr(*stack, '\n');
+	printf("PTR ISNEXTLINE: %s\n", ptr);
+
 	if (ptr)
 	{
-		len = ptr - (char *)buf + 1;
-		*tmp = ft_strnew(len);
-		ft_strncpy(*tmp, (char *)buf, (len - 1));
-		printf("tmp: %s\n", *tmp);
+		len = ptr - *stack + 1;
+	//	*tmp = ft_strnew(len);
+	//	ft_strncpy(*tmp, *stack, (len - 1));
+	//	printf("TMP ISNEXTLINE: %s\n", *tmp);
 
-		ft_strcpy((char *)buf, ((char *)buf + len));
+		ft_strcpy(*stack, (*stack + len));
 
 		//дальше лажа
 		//line = ft_strjoin
@@ -44,38 +46,36 @@ ptr = ft_strchr((char *)buf, '\n');
 
 int	get_next_line(const int fd, char **line)
 {
-	char buf[BUFF_SIZE + 1];
+	char *buf;
 	int r;
-	char *tmp;
+//	char *tmp;
 	static char *stack[MAX_FD];
 	//
 
-	if ((fd < 0 || line == NULL || read(fd, buf, 0) < 0))
+	if ((fd < 0 || line == NULL || read(fd, stack[fd], 0) < 0) || \
+	!(buf = ft_strnew(sizeof(char) * BUFF_SIZE)))
 		return (-1);
+	printf("GNL BUF: %s\n", buf);
+	if(stack[fd])
+		if(ft_is_next_line(&stack[fd], line))
+			//line = (char **)ft_strjoin(stack[fd], tmp);
+			//printf("%s\n", *line);
+			//free(tmp);
+			return(1);
 	while((r = read(fd, buf, BUFF_SIZE)) > 0)
 	{
+		buf[r] ='\0';
+
 		printf("read bytes: %d\n", r);
-		printf("buf is: %s\n", buf);
+	//	printf("buf is: %s\n", buf);
+	//	buf[0] = '\0';
+		printf("GNL LINE: %s\n", *line);
 
-		buf[0] = '\0';
-
-		printf("line: %s\n", *line);
-
-
-
-		if(ft_is_next_line((char **)&buf, &tmp))
-		{
-			line = (char **)ft_strjoin(stack, tmp);
-			printf("%s\n", *line);
-
-			free(tmp);
-			return(1);
-		}
 		else
 		{
-			stack = ft_strdup(buf);
-			printf("stack: %s\n", stack);
-			line = (char **)ft_strjoin(stack, buf);
+		//	stack = ft_strdup(buf);
+			printf("GNL STACK[FD]: %s\n", stack[fd]);
+			//line = (char **)ft_strjoin(stack, buf);
 		}
 	}
 		return(0);
