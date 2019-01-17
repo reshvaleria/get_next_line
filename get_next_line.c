@@ -43,6 +43,19 @@ static	void	ft_stack_check(char **stack, char **buf)
 	else
 		*stack = ft_strdup(*buf);
 }
+// static void	ft_free_all(char **new, int wi)
+// {
+// 	int i;
+//
+// 	i = 0;
+// 	while (i < wi)
+// 	{
+// 		ft_strdel(&new[i]);
+// 		i++;
+// 	}
+// 	free(new);
+// 	new = NULL;
+// }
 
 int	get_next_line(const int fd, char **line)
 {
@@ -61,19 +74,31 @@ int	get_next_line(const int fd, char **line)
 		buf[r] = '\0';
 		ft_stack_check(&stack[fd], &buf);
 		if (ft_is_next_line(&stack[fd], line))
-		//{
-			//free(buf);
-			//printf("this is buf: %s\n", buf);
+		{
+			free(buf);
+	//		printf("this is buf: %s\n", buf);
 			break ;
-		//}
+		}
 	}
 	if (r != 0 || stack[fd] == NULL || stack[fd][0] == '\0')
 	{
 		if (!r && *line)
+			{
+//ft_free_all(stack, MAX_FD);
+ft_strdel(&stack[fd]);
+free(*stack);
 			*line = NULL;
+			}
+		//	free(stack);
+	//	if(stack[fd])
+// ft_strdel(&stack[fd]);
+// free (*stack);
+//stack[fd] = NULL;
+
 		return (r > 0 ? 1 : r);
 	}
 	*line = stack[fd];
+	//ft_free_all(stack, MAX_FD);
 	stack[fd] = NULL;
 	return (1);
 }
