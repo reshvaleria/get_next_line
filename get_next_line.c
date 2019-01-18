@@ -23,6 +23,7 @@ static int	ft_is_next_line(char **stack, char **line)
 		tmp = ptr;
 		*tmp = '\0';
 		*line = ft_strdup(*stack);
+		ft_strdel(stack);
 		*stack = ft_strdup(tmp + 1);
 		return (1);
 	}
@@ -37,11 +38,27 @@ static	void	ft_stack_check(char **stack, char **buf)
 	{
 		tmp = *stack;
 		*stack = ft_strjoin(tmp, *buf);
-		free(tmp);
-		tmp = NULL;
+		ft_strdel(&tmp);
 	}
 	else
 		*stack = ft_strdup(*buf);
+}
+
+static int ft_line_maker(int r, char **stack, char **line)
+{
+	if (r != 0 || *stack == NULL || *stack[0] == '\0')
+	{
+		if (!r && *line)
+		{
+			*line = NULL;
+		ft_strdel(stack);
+	}
+		return (r > 0 ? 1 : r);
+	}
+	*line = *stack;
+	ft_strdel(stack);
+	//*stack = NULL;
+	return (1);
 }
 
 int	get_next_line(const int fd, char **line)
@@ -50,7 +67,7 @@ int	get_next_line(const int fd, char **line)
 	char		*buf;
 	int			r;
 
-	if ((fd < 0 || fd > MAX_FD || line == NULL || read(fd, stack[fd], 0) < 0)
+	if ((fd < 0 || fd > MAX_FD || !line || read(fd, stack[fd], 0) < 0)
 		|| !(buf = ft_strnew(sizeof(char) * BUFF_SIZE)))
 		return (-1);
 	if (stack[fd])
@@ -66,13 +83,5 @@ int	get_next_line(const int fd, char **line)
 			break ;
 		}
 	}
-	if (r != 0 || stack[fd] == NULL || stack[fd][0] == '\0')
-	{
-		if (!r && *line)
-			*line = NULL;
-		return (r > 0 ? 1 : r);
-	}
-	*line = stack[fd];
-	stack[fd] = NULL;
-	return (1);
+	return(ft_line_maker(r, &stack[fd], line));
 }
