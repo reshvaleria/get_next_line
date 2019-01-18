@@ -56,8 +56,7 @@ static int ft_line_maker(int r, char **stack, char **line)
 		return (r > 0 ? 1 : r);
 	}
 	*line = *stack;
-	ft_strdel(stack);
-	//*stack = NULL;
+	*stack = NULL;
 	return (1);
 }
 
