@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 static int	ft_is_next_line(char **stack, char **line)
 {
@@ -51,8 +50,8 @@ static int ft_line_maker(int r, char **stack, char **line)
 		if (!r && *line)
 		{
 			*line = NULL;
-		ft_strdel(stack);
-	}
+			ft_strdel(stack);
+		}
 		return (r > 0 ? 1 : r);
 	}
 	*line = *stack;
@@ -78,9 +77,9 @@ int	get_next_line(const int fd, char **line)
 		ft_stack_check(&stack[fd], &buf);
 		if (ft_is_next_line(&stack[fd], line))
 		{
-			free(buf);
+			free (buf);
 			break ;
 		}
 	}
-	return(ft_line_maker(r, &stack[fd], line));
+	return (ft_line_maker(r, &stack[fd], line));
 }
