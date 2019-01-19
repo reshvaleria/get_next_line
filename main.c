@@ -19,9 +19,9 @@ int main(int argc, char **argv)
 		{
 			i++;
 			g = get_next_line(fd, &line);
-			printf("%d LINE: %s\n", i, line);
+			printf("LINE: %s\n", line);
 			free(line);
-			printf("%d\n", g);
+			//printf("%d\n", g);
 		}
 		close(fd);
 	}

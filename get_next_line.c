@@ -6,7 +6,7 @@
 /*   By: wjeyne-d <wjeyne-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:56:18 by wjeyne-d          #+#    #+#             */
-/*   Updated: 2019/01/16 23:01:59 by wjeyne-d         ###   ########.fr       */
+/*   Updated: 2019/01/19 17:06:54 by wjeyne-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_is_next_line(char **stack, char **line)
 	return (0);
 }
 
-static	void	ft_stack_check(char **stack, char **buf)
+static void	ft_stack_check(char **stack, char **buf)
 {
 	char *tmp;
 
@@ -41,7 +41,7 @@ static	void	ft_stack_check(char **stack, char **buf)
 		*stack = ft_strdup(*buf);
 }
 
-static int ft_line_maker(int r, char **stack, char **line)
+static int	ft_line_maker(int r, char **stack, char **line)
 {
 	if (r != 0 || *stack == NULL || *stack[0] == '\0')
 	{
@@ -57,7 +57,7 @@ static int ft_line_maker(int r, char **stack, char **line)
 	return (1);
 }
 
-int	get_next_line(const int fd, char **line)
+int			get_next_line(const int fd, char **line)
 {
 	static char *stack[MAX_FD];
 	char		*buf;
@@ -75,7 +75,7 @@ int	get_next_line(const int fd, char **line)
 		ft_stack_check(&stack[fd], &buf);
 		if (ft_is_next_line(&stack[fd], line))
 		{
-			free (buf);
+			free(buf);
 			break ;
 		}
 	}
