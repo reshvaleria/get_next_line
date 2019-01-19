@@ -15,15 +15,13 @@
 static int	ft_is_next_line(char **stack, char **line)
 {
 	char *ptr;
-	char *tmp;
 
 	if ((ptr = ft_strchr(*stack, '\n')))
 	{
-		tmp = ptr;
-		*tmp = '\0';
+		*ptr = '\0';
 		*line = ft_strdup(*stack);
 		ft_strdel(stack);
-		*stack = ft_strdup(tmp + 1);
+		*stack = ft_strdup(ptr + 1);
 		return (1);
 	}
 	return (0);
