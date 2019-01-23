@@ -19,9 +19,12 @@ static int	ft_is_next_line(char **stack, char **line)
 	if ((ptr = ft_strchr(*stack, '\n')))
 	{
 		*ptr = '\0';
-		*line = ft_strdup(*stack);
-		ft_strdel(stack);
-		*stack = ft_strdup(ptr + 1);
+		if (!(*line = ft_strdup(*stack)))
+			return (-1);
+		if (!(ptr = ft_strdup(ptr + 1)))
+			return (-1);
+		free (*stack);
+		*stack = ptr;
 		return (1);
 	}
 	return (0);
@@ -46,10 +49,9 @@ static int	ft_line_maker(int r, char **stack, char **line)
 	if (r != 0 || *stack == NULL || *stack[0] == '\0')
 	{
 		if (!r && *line)
-		{
 			*line = NULL;
+		if (r <= 0)
 			ft_strdel(stack);
-		}
 		return (r > 0 ? 1 : r);
 	}
 	*line = *stack;
@@ -63,12 +65,15 @@ int			get_next_line(const int fd, char **line)
 	char		*buf;
 	int			r;
 
-	if ((fd < 0 || fd > MAX_FD || !line || read(fd, stack[fd], 0) < 0)
+	if ((fd < 0 || fd >= MAX_FD || !line || read(fd, stack[fd], 0) < 0)
 		|| !(buf = ft_strnew(sizeof(char) * BUFF_SIZE)))
 		return (-1);
 	if (stack[fd])
-		if (ft_is_next_line(&stack[fd], line))
-			return (1);
+	{
+		r = ft_is_next_line(&stack[fd], line);
+		if (r)
+			return (r);
+	}
 	while ((r = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[r] = '\0';
