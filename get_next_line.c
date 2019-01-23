@@ -6,7 +6,7 @@
 /*   By: wjeyne-d <wjeyne-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:56:18 by wjeyne-d          #+#    #+#             */
-/*   Updated: 2019/01/19 17:06:54 by wjeyne-d         ###   ########.fr       */
+/*   Updated: 2019/01/23 18:56:51 by wjeyne-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	ft_is_next_line(char **stack, char **line)
 			return (-1);
 		if (!(ptr = ft_strdup(ptr + 1)))
 			return (-1);
-		free (*stack);
+		free(*stack);
 		*stack = ptr;
 		return (1);
 	}
